@@ -29,9 +29,10 @@ a medium width screen the maze is to the left and the current scores and feature
 are on the right. On small screens the maze appears at the top, with the scores
 and features below.
 
-The maze is fixed at a width of 380 pixels, to allow for small screens. The height
-of the maze is set near to 400 pixels, allowing for laptop screens, allowing for
-20 rows of corridors set at 18 pixels high + 3 for the platforms = 420px.
+The height of the maze is set near to 400 pixels, allowing for laptop screens, 
+allowing for 20 rows of corridors set at 18 pixels high + 3 for the platforms = 420px.
+
+The stage is fixed at a width of about 380 pixels, to allow for small screens. 
 
 ## Maze Construction
 
@@ -43,6 +44,17 @@ There should be about 20 layers of corridors, so if we assume a height of 420
 pixels for the maze, the corridors should be about 21 pixels high and consequently
 the ball 16 pixels in diameter. In this case the gaps (gates) between platforms 
 should be about 18 pixels.
+
+If we allow for a maximum rotation (tilt) of 15 degrees, what is the maximum width
+that the maze can be to fit a stage width of 390 pixels?
+If we assume that the maze width is 360, then the diagonal is SQRT(180^2 + 210^2) = 277.
+and this is at an angle of acos(210/277) = 40.7 degrees so on the circle of rotation
+x = sin(40.7) * 277 - 180.
+Now we rotate to x = sin(55.7) * 277 = 228 which is too wide.
+So set the maze width to 320, diagonal is SQRT(160^2 + 210^2) = 264
+acos(210/264) = 37.3 degrees
+x = sin(52.3) * 264 = 208 which still a little too wide, so we will set the width
+of the maze at 300 pixels.
 
 The graphics for the maze should be vector drawn, to allow for the different tilt 
 angles.

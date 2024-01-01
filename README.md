@@ -13,7 +13,7 @@ The game is written in JS, React, Pixi/React
 The setup is as follows:
 
 -   npx create-react-app
--   npm install @pixi/react
+-   npm install pixi.js @pixi/react
 -   npm install react-router-dom
 -   npm install react-bootstrap
 

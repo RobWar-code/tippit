@@ -21,9 +21,9 @@ function NavBar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto nav">
-            <Nav.Link as={Link} to="/">Game</Nav.Link>
-            <Nav.Link as={Link} to="/scores">Scores</Nav.Link>
-            <Nav.Link href="https://narayana-art.co.uk/ZingGames/ZingGames.php">Zing</Nav.Link>
+            <Nav.Link className="navItem" as={Link} to="/">Game</Nav.Link>
+            <Nav.Link className="navItem" as={Link} to="/scores">Scores</Nav.Link>
+            <Nav.Link className="navItem" href="https://narayana-art.co.uk/ZingGames/ZingGames.php">Zing</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

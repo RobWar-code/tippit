@@ -1,0 +1,18 @@
+Work Log
+
+Contents
+    Due
+    Done
+
+<h1>Due
+
+    Separate the stage into it's own component
+
+    Set-up the startGame and initialLoad states
+
+    Do the Start Game button in the score column
+
+    Establish the react state for the maze definition
+
+
+<h1>Done

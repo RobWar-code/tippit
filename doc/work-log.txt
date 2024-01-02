@@ -6,6 +6,8 @@ Contents
 
 <h1>Due
 
+    * Define the rounds and games
+
     Separate the stage into it's own component
 
     Set-up the startGame and initialLoad states

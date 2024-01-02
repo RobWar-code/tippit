@@ -1,15 +1,24 @@
+import {useState} from 'react';
 import {Container, Row, Col} from 'react-bootstrap';
-import {Stage} from '@pixi/react';
-import GLOBALS from '../constants/constants';
+import GameStage from '../components/GameStage.js';
 
 export default function GamePage() {
+    const [initialLoad, setInitialLoad] = useState(true);
+    const [roundStart, setRoundStart] = useState(true);
+    const [gameStart, setGameStart] = useState(true);
+
     return (
         <Container>
             <Row>
                 <Col sm={12} md={6} className="text-center">
-                    <Stage width={GLOBALS.stageWidth} height={GLOBALS.stageHeight} options={{background: 0xc0c000}}>
-
-                    </Stage>
+                    <GameStage 
+                        initialLoad={initialLoad}
+                        setInitialLoad={setInitialLoad}
+                        roundStart={roundStart}
+                        setRoundStart={setRoundStart}
+                        gameStart={gameStart}
+                        setGameStart={setGameStart}
+                    />
                 </Col>
                 <Col sm={12} md={6} className="text-center">
                     <h2>Score</h2>

@@ -34,6 +34,15 @@ allowing for 20 rows of corridors set at 18 pixels high + 3 for the platforms = 
 
 The stage is fixed at a width of about 380 pixels, to allow for small screens. 
 
+## Game Play
+
+The user steers a ball through the maze by tilting the maze left or right to make
+the ball roll to an entrance in the maze and so drop to another level. The scores
+are traps in the final row, arranged along the bottom of the maze.
+
+The game is divided into rounds of six maze runs, with a total score tally for
+the round being kept.
+
 ## Maze Construction
 
 The maze is randomly generated within certain parameters to produce an interesting
@@ -76,7 +85,7 @@ drop.
 If the ball in the maze passes the base of the display, the display should scroll
 automatically.
 
-The top of the maze has a handle which the user can drag and drop to tilt the maze.
+A slider is provided at the base of the maze stage to tilt the maze.
 
 ### Maze Drawing Algorithm and Data
 

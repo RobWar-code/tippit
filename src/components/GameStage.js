@@ -1,6 +1,7 @@
 import {useState, useEffect, useCallback} from 'react';
 import {Stage, Graphics} from '@pixi/react';
 import GLOBALS from '../constants/constants';
+import ScoreTags from './ScoreTags'
 
 
 export default function GameStage({
@@ -13,6 +14,8 @@ export default function GameStage({
     mazeTilt
 }) {
     const [mazeData, setMazeData] = useState([]);
+    const [scoreData, setScoreData] = useState([]);
+    const [mazeBuilt, setMazeBuilt] = useState(false);
 
     useEffect( () => {
         const createMaze = () => {
@@ -103,7 +106,7 @@ export default function GameStage({
             } // Next of 2,3 rows
 
             // Subsequent Rows ( 3 - 19 )
-            for (let i = 3; i <= 19; i++) {
+            for (let i = 3; i < GLOBALS.numMazeRows; i++) {
                 maze.push({
                     platforms: [],
                     gateways: [{
@@ -152,8 +155,35 @@ export default function GameStage({
                 }
             }
             setMazeData(maze);
+            doScoreData(maze[GLOBALS.numMazeRows - 1]);
+            setMazeBuilt(true);
         }
 
+        const doScoreData = (mazeEndRow) => {
+            console.log("mazeEndRow:", mazeEndRow);
+            let maxDone = false;
+            let numDrops = mazeEndRow.gateways.length;
+            let maxs = GLOBALS.maxDropScore;
+            let scoreTagData = [];
+            for (let i = 0; i < numDrops; i++) {
+                let entry = {};
+                entry.leftX = mazeEndRow.gateways[i].leftX;
+                entry.rightX = mazeEndRow.gateways[i].rightX;
+                if (i === 0 || i === numDrops - 1) {
+                    entry.score = 0;
+                }
+                else if (Math.random() > 0.75 && !maxDone) {
+                    maxDone = true;
+                    entry.score = maxs;
+                }
+                else {
+                    entry.score = Math.floor(maxs / 4 * Math.random());
+                }
+                scoreTagData.push(entry);
+            }
+            console.log("scoreTagData:", scoreTagData);
+            setScoreData(scoreTagData);
+        }
         if (initialLoad || roundStart || gameStart) {
             createMaze();
         }
@@ -186,7 +216,29 @@ export default function GameStage({
 
         g.lineStyle(1, 0x000000, 1);
 
-        g.drawRect(mazeLeft, mazeTop, GLOBALS.mazeWidth, GLOBALS.mazeHeight);
+        // Draw the bounding rectangle
+        let rect = [];
+        let leftX = midX - GLOBALS.mazeWidth / 2;
+        let rightX = midX + GLOBALS.mazeWidth / 2;
+        let topY = midY - GLOBALS.mazeHeight / 2;
+        let bottomY = midY + GLOBALS.mazeHeight / 2;
+        rect.push({x: leftX, y: topY});
+        rect.push({x: rightX, y: topY});
+        rect.push({x: rightX, y: bottomY});
+        rect.push({x: leftX, y: bottomY});
+        // Adjust for tilt
+        for (let i = 0; i < 4; i++) {
+            let {x, y} = rotatePoint(rect[i].x, rect[i].y, midX, midY, mazeTilt);
+            rect[i].x = x;
+            rect[i].y = y;
+        }
+        // Draw the rectangle
+        for (let i = 0; i < 4; i++) {
+            let n = (i + 1) % 4;
+            g.moveTo(rect[i].x, rect[i].y);
+            g.lineTo(rect[n].x, rect[n].y);
+        }
+        console.log("rect:", rect);
 
         let rowOffsetY = GLOBALS.rowHeight - GLOBALS.platformDepth;
         let count = 0;
@@ -221,7 +273,12 @@ export default function GameStage({
 
     return (
         <Stage width={GLOBALS.stageWidth} height={GLOBALS.stageHeight} options={{background: 0xc0c000}}>
-            <Graphics draw={drawMaze} />
+            { mazeBuilt &&
+            <>
+                <Graphics draw={drawMaze} />
+                <ScoreTags scoreData={scoreData} mazeTilt={mazeTilt}/>
+            </>
+            }
         </Stage>
     )
 }

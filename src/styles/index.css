@@ -7,3 +7,20 @@
 .navItem:hover {
     background-color: beige;
 }
+
+/* Maze Tilt Control */
+.sliderHead {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.sliderText {
+    font-size: 14px;
+    font-style: italic;
+}
+
+.tiltSlider {
+    width: 60%;
+    background: #b0b040;
+}

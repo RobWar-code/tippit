@@ -6,7 +6,7 @@ export default function GamePage() {
     const [initialLoad, setInitialLoad] = useState(true);
     const [roundStart, setRoundStart] = useState(true);
     const [gameStart, setGameStart] = useState(true);
-    const [mazeTilt, setMazeTilt] = useState(10 * Math.PI/180);
+    const [mazeTilt, setMazeTilt] = useState(0);
 
     return (
         <Container>
@@ -20,6 +20,7 @@ export default function GamePage() {
                         gameStart={gameStart}
                         setGameStart={setGameStart}
                         mazeTilt={mazeTilt}
+                        setMazeTilt={setMazeTilt}
                     />
                 </Col>
                 <Col sm={12} md={6} className="text-center">

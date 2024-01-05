@@ -6,15 +6,23 @@ Contents
 
 <h1>Due
 
-    * Define the rounds and games
-
-    Separate the stage into it's own component
+    
+    Do the maze tilt slider
 
     Set-up the startGame and initialLoad states
 
     Do the Start Game button in the score column
 
-    Establish the react state for the maze definition
-
+ 
 
 <h1>Done
+
+    05/01/2024
+    
+    * Define the rounds and games states
+
+    * Separate the stage into it's own component
+
+    * Establish the react state for the maze definition
+
+    * Do the maze create and draw function

@@ -18,18 +18,18 @@ export default function ScoreTags({
         return <Text text={content} x={x} y={y} rotation={rotation} style={style} />
     };
 
-    console.log("scoreData:", scoreData);
     let textData = [];
     for (let i = 0; i < scoreData.length; i++) {
         const midX = GLOBALS.stageWidth / 2;
-        const midY = GLOBALS.stageHeight / 2;
-        let px = scoreData[i].leftX + 48;
-        let py = GLOBALS.mazeHeight / 2 + midY - 8;
+        const mazeLeft = midX - GLOBALS.mazeWidth / 2;
+        const midY = GLOBALS.stageHeight / 2 + 5;
+        let px = scoreData[i].leftX + mazeLeft + GLOBALS.gateWidth / 2 - 8;
+        let py = GLOBALS.mazeHeight / 2 + midY - 20;
         // Rotate x, y to position
         let {x, y} = rotatePoint(px, py, midX, midY, mazeTilt);
         textData.push ({
             id: i,
-            content: scoreData[i].score,
+            content: scoreData[i].score.toString(),
             x: x,
             y: y,
             rotation: mazeTilt,
@@ -37,7 +37,6 @@ export default function ScoreTags({
         });
     }
     const texts = textData;
-    console.log(texts);
 
     return (
         <>

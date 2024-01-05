@@ -1,5 +1,6 @@
 import {useState, useEffect, useCallback} from 'react';
 import {Stage, Graphics} from '@pixi/react';
+import {Form} from 'react-bootstrap';
 import GLOBALS from '../constants/constants';
 import ScoreTags from './ScoreTags'
 
@@ -11,7 +12,8 @@ export default function GameStage({
     setRoundStart,
     gameStart,
     setGameStart,
-    mazeTilt
+    mazeTilt,
+    setMazeTilt
 }) {
     const [mazeData, setMazeData] = useState([]);
     const [scoreData, setScoreData] = useState([]);
@@ -160,7 +162,6 @@ export default function GameStage({
         }
 
         const doScoreData = (mazeEndRow) => {
-            console.log("mazeEndRow:", mazeEndRow);
             let maxDone = false;
             let numDrops = mazeEndRow.gateways.length;
             let maxs = GLOBALS.maxDropScore;
@@ -181,7 +182,6 @@ export default function GameStage({
                 }
                 scoreTagData.push(entry);
             }
-            console.log("scoreTagData:", scoreTagData);
             setScoreData(scoreTagData);
         }
         if (initialLoad || roundStart || gameStart) {
@@ -233,12 +233,13 @@ export default function GameStage({
             rect[i].y = y;
         }
         // Draw the rectangle
+        g.beginFill(0xf0f0f0);
+        g.moveTo(rect[0].x, rect[0].y);
         for (let i = 0; i < 4; i++) {
             let n = (i + 1) % 4;
-            g.moveTo(rect[i].x, rect[i].y);
             g.lineTo(rect[n].x, rect[n].y);
         }
-        console.log("rect:", rect);
+        g.endFill();
 
         let rowOffsetY = GLOBALS.rowHeight - GLOBALS.platformDepth;
         let count = 0;
@@ -259,11 +260,13 @@ export default function GameStage({
                     p.y = y;
                 }
                 // Draw Platform
+                g.beginFill(0xff0000);
+                g.moveTo(rect[0].x, rect[0].y);
                 for (let i = 0; i < 4; i++) {
                     let n = (i + 1) % 4;
-                    g.moveTo(rect[i].x, rect[i].y);
                     g.lineTo(rect[n].x, rect[n].y);
                 }
+                g.endFill();
             }
             rowOffsetY = rowOffsetY + GLOBALS.rowHeight;
             ++count;
@@ -271,7 +274,14 @@ export default function GameStage({
 
     }, [mazeData, mazeTilt]);
 
+    const sliderChange = (e) => {
+        const p = e.target.value;
+        let angle = ((p / 100) * 20 - 10) * Math.PI/180;
+        setMazeTilt(angle);
+    }
+
     return (
+        <>
         <Stage width={GLOBALS.stageWidth} height={GLOBALS.stageHeight} options={{background: 0xc0c000}}>
             { mazeBuilt &&
             <>
@@ -280,5 +290,12 @@ export default function GameStage({
             </>
             }
         </Stage>
+        <div className="text-center">
+            <p className="sliderHead">Tilt Control</p>
+            <span className="sliderText">-10&deg;&emsp;</span>
+            <Form.Range className="tiltSlider" defaultValue={50} onChange={sliderChange}/>
+            <span className="sliderText">&emsp;+10&deg;</span>
+        </div>
+        </>
     )
 }

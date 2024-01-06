@@ -123,19 +123,48 @@ of the preceding row.
 
 The third row follows the same pattern.
 
-The fourth and subsequent rows alternate as follows:
-
--   A zero-score gateway appears at both left and right ends of the row
-
--   4th, 6th etc A new gateway is added to the right of the first of the row above
-
--   5th, 7th etc A new gateway is added to the left of the first row above
+The fourth and subsequent rows have a gate way on the left and right ends. Other gateways
+are determined by taking the midpoint of the platform of the row above, then if there is
+room to insert a gateway (varying the position slightly at random), then one is added.
 
 ## The Ball
 
 The ball should be considered to be a disk with a spot toward its edge to indicate
 rolling action. It should be considered as a mass of 1Kg acted on by a maximum g-force
-of 10 Newtons.
+of 10 Newtons although this can be scaled as appropriate.
+
+### Ball Physics
+
+The ball first presented on the middle platform of the top row, without initial motion.
+As the maze is tilted an acceleration is applied to the ball. This is calculated as
+follows:
+    
+Assuming the average distance from the midpoint of the platform to its gateway is
+50 pixels and that this takes 0.7 seconds to traverse at a tilt of 3 degrees.
+- We have s = a * t^2 hence 
+- a = 50 / 0.49 ~ 100 pixels per second per second
+
+Since this is derivative as a proportion of the vertical 180 degrees
+- We have 100 = 3 / 180 * G
+- G = (180 * 100) / 3 = 6000 pixels per second per second (as a theoretical maximum)
+
+The final velocity is also calculated as this carries over to the next measurement.
+
+Since the ticker for the ball operates at 1/60 of a second, we can adjust the calculations
+accordingly, ie G = 100 pixels per tick per tick.
+
+As the ball rolls, the spot rotates around the circle (beginning from the vertical) and
+this completes s / (PI * D) revolutions where D is the diameter of the disk. So we
+take the decimal part of the value to determine the position about the centre of the 
+ball.
+
+#### Entry into a gateway
+
+If the velocity of the ball exceeds 50 pixels/second then the ball jumps the gateway
+(indicated by a little vertical bounce) otherwise it strikes the edge of the platform
+which is three pixels high so that it reverses its horizontal velocity by an arbitrary
+50%, it falls at G pixels per tick per tick to cover a vertical distance of 20 pixels.
+
 
 ## Schedule
 

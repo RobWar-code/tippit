@@ -10,7 +10,10 @@ const GLOBALS={
     maxPlatformsPerRow: 7,
     ballWidth: 16,
     ballRadius: 8,
-    maxDropScore: 20
+    ballSpotRadius: 2,
+    ballSpotOffset: 6,
+    maxDropScore: 20,
+    g: 3
 };
 
 export default GLOBALS;

@@ -3,6 +3,7 @@ import {Stage, Graphics} from '@pixi/react';
 import {Form} from 'react-bootstrap';
 import GLOBALS from '../constants/constants';
 import ScoreTags from './ScoreTags'
+import MovingBall from './MovingBall';
 
 
 export default function GameStage({
@@ -287,6 +288,17 @@ export default function GameStage({
             <>
                 <Graphics draw={drawMaze} />
                 <ScoreTags scoreData={scoreData} mazeTilt={mazeTilt}/>
+                <MovingBall
+                    mazeTilt={mazeTilt}
+                    setMazeTilt={setMazeTilt}
+                    mazeData={mazeData}
+                    gameStart={gameStart}
+                    setGameStart={setGameStart}
+                    roundStart={roundStart}
+                    setRoundStart={setRoundStart}
+                    initialLoad={initialLoad}
+                    setInitialLoad={setInitialLoad}
+                />  
             </>
             }
         </Stage>

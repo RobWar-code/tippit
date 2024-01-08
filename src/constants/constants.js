@@ -13,7 +13,8 @@ const GLOBALS={
     ballSpotRadius: 2,
     ballSpotOffset: 6,
     maxDropScore: 20,
-    g: 3
+    maxTilt: 5,
+    g: 1
 };
 
 export default GLOBALS;

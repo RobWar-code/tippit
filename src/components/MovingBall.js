@@ -61,13 +61,16 @@ export default function MovingBall ({
     useEffect( () => {
         const adjustBall = () => {
             let a = ballAcceleration;
+            let v = ballVelocity + a;
             let s = ballVelocity + a; // (t = 1)
             let bx = ballX + s;
             if (bx <= GLOBALS.ballRadius) {
                 bx = GLOBALS.ballRadius;
+                v = 0;
             }
             else if (bx >= GLOBALS.mazeWidth - GLOBALS.ballRadius) {
                 bx = GLOBALS.mazeWidth - GLOBALS.ballRadius;
+                v = 0;
             }
             s = bx - ballX;
 
@@ -77,11 +80,8 @@ export default function MovingBall ({
 
             setBallX(bx);
             setBallAngle(ballAngle1);
-            let v = ballVelocity + a;
-            console.log("v:", v);
             setBallVelocity(v); // u + a * t
             a = GLOBALS.g * (mazeTilt * 180/Math.PI) / 180;
-            console.log("a:", a);
             setBallAcceleration(a);
         }
 
@@ -110,7 +110,7 @@ export default function MovingBall ({
 
     const drawBall = useCallback((g) => {
 
-        const moveBall = (delta) => {
+        const moveBall = () => {
 
             // Draw the ball
             g.clear();
@@ -135,10 +135,10 @@ export default function MovingBall ({
             console.log("ballangle, sx, sy:", ballAngle, sx, sy);
             console.log("px, ballX: ", px, ballX);
 
-            let {x1, y1} = rotatePoint(sx, sy, midX, midY, mazeTilt);
+            let {x: x1, y: y1} = rotatePoint(sx, sy, midX, midY, mazeTilt);
             g.lineStyle(1, 0xff0000, 1);
             g.beginFill(0xff0000);
-            g.drawCircle(x1, y1, 15);
+            g.drawCircle(x1, y1, GLOBALS.ballSpotRadius);
             g.endFill();
 
         }

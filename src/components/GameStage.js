@@ -277,7 +277,7 @@ export default function GameStage({
 
     const sliderChange = (e) => {
         const p = e.target.value;
-        let angle = ((p / 100) * 20 - 10) * Math.PI/180;
+        let angle = ((p / 100) * GLOBALS.maxTilt * 2 - GLOBALS.maxTilt) * Math.PI/180;
         setMazeTilt(angle);
     }
 
@@ -304,9 +304,9 @@ export default function GameStage({
         </Stage>
         <div className="text-center">
             <p className="sliderHead">Tilt Control</p>
-            <span className="sliderText">-10&deg;&emsp;</span>
+            <span className="sliderText">-{GLOBALS.maxTilt}&deg;&emsp;</span>
             <Form.Range className="tiltSlider" defaultValue={50} onChange={sliderChange}/>
-            <span className="sliderText">&emsp;+10&deg;</span>
+            <span className="sliderText">&emsp;+{GLOBALS.maxTilt}&deg;</span>
         </div>
         </>
     )

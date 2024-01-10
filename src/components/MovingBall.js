@@ -12,7 +12,11 @@ export default function MovingBall ({
     roundStart,
     setRoundStart,
     initialLoad,
-    setInitialLoad
+    setInitialLoad,
+    scoreData,
+    roundScore,
+    setRoundScore,
+    setGameOver
 }) {
     const [ballVelocity, setBallVelocity] = useState(0);
     const [ballAcceleration, setBallAcceleration] = useState(0);
@@ -67,7 +71,8 @@ export default function MovingBall ({
 
             const isBallInGateway = (v, s) => {
                 let isInGateway = false;
-                let i, gateNum, leftX, rightX, targetPlatform;
+                let scoreGate = false;
+                let i, gateNum, leftX, rightX, targetPlatform, score;
                 if (v < 0) {
                     for (i = mazeData[ballRow].gateways.length - 1; i >= 0; i--) {
                         if (ballX > mazeData[ballRow].gateways[i].rightX &&
@@ -93,8 +98,13 @@ export default function MovingBall ({
                     rightX = mazeData[ballRow].gateways[gateNum].rightX;
                     // Due: allow for final row and score
                     targetPlatform = getTargetPlatform(leftX, rightX);
+                    // Check whether in final row
+                    if (ballRow >= GLOBALS.numMazeRows - 1) {
+                        score = scoreData[gateNum];
+                        scoreGate = true;
+                    }
                 }
-                return {isInGateway, gateNum, leftX, rightX, targetPlatform};
+                return {isInGateway, gateNum, leftX, rightX, targetPlatform, scoreGate, score};
             }
 
             const getTargetPlatform = (leftX, rightX) => {
@@ -105,6 +115,7 @@ export default function MovingBall ({
                         break;
                     }
                 }
+                if (i >= mazeData[ballRow + 1].platforms.length) i = -1;
                 return i;
             }
 
@@ -117,6 +128,9 @@ export default function MovingBall ({
             }
 
             const doBallFalling = () => {
+                let scoreGate = false;
+                let score = 0;
+
                 // Do 1 tick of adjustment
                 const leftX = mazeData[ballRow].gateways[fallingGateNum].leftX;
                 const rightX = mazeData[ballRow].gateways[fallingGateNum].rightX;
@@ -161,17 +175,30 @@ export default function MovingBall ({
                 let nextRowY = (ballRow + 2) * GLOBALS.rowHeight - GLOBALS.platformDepth - GLOBALS.ballRadius;
                 if (by >= nextRowY) {
                     by = nextRowY;
-                    let br = ballRow + 1;
-                    setBallRow(br);
+                    setBallRow(prevBallRow => prevBallRow + 1);
                     let tp = ballTargetPlatform;
                     setBallPlatform(tp);
-                    setIsFalling(false);
+                    let {isInGateway, gateNum: fGatenum, 
+                        targetPlatform: dropPlatform, scoreGate, score} =
+                        isBallInGateway(v, s);
+                    if (isInGateway) {
+                        setFallingGateNum(fGatenum);
+                        setBallPlatform(dropPlatform);
+                        if (scoreGate) {
+                            setIsFalling(false);
+                            return {scoreGate, score}
+                        }
+                    }
+                    else {
+                        setIsFalling(false);
+                    }
                 }
                 setBallX(cbx);
                 setBallY(by);
                 setBallVY(vy);
                 setBallVelocity(v);
                 setBallAcceleration(0);
+                return {scoreGate, score}
             }
 
             // adjustBall main
@@ -182,8 +209,15 @@ export default function MovingBall ({
                 doBallFalling();
             }
             else {
-                let {isInGateway, gateNum, leftX, rightX, targetPlatform} = isBallInGateway(v, s);
+                let {isInGateway, gateNum, leftX, rightX, targetPlatform, scoreGate, score} = isBallInGateway(v, s);
                 if (isInGateway) {
+                    if (scoreGate) {
+                        score = score + roundScore;
+                        setRoundScore(score);
+                        setGameOver(true);
+                        app.ticker.remove(adjustBall);
+                        return;
+                    }
                     doBallThroughGateway(gateNum, leftX, rightX, targetPlatform, v);
                 }
                 else {
@@ -245,7 +279,11 @@ export default function MovingBall ({
         setBallRow,
         fallingGateNum,
         setFallingGateNum,
-        isFalling
+        isFalling,
+        roundScore,
+        setRoundScore,
+        setGameOver,
+        scoreData
     ]);
 
     const drawBall = useCallback((g) => {

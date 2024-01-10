@@ -14,7 +14,10 @@ export default function GameStage({
     gameStart,
     setGameStart,
     mazeTilt,
-    setMazeTilt
+    setMazeTilt,
+    roundScore,
+    setRoundScore,
+    setGameOver
 }) {
     const [mazeData, setMazeData] = useState([]);
     const [scoreData, setScoreData] = useState([]);
@@ -311,6 +314,10 @@ export default function GameStage({
                     setRoundStart={setRoundStart}
                     initialLoad={initialLoad}
                     setInitialLoad={setInitialLoad}
+                    scoreData={scoreData}
+                    roundScore={roundScore}
+                    setRoundScore={setRoundScore}
+                    setGameOver={setGameOver}
                 />  
             </>
             }

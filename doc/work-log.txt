@@ -17,6 +17,8 @@ Contents
 
     Allow for final row and game score/over
 
+    Allow for max speed to pass through gateway
+
     Set-up the startGame and initialLoad states
 
     Do the Start Game button in the score column

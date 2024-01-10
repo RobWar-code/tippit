@@ -14,7 +14,8 @@ const GLOBALS={
     ballSpotOffset: 6,
     maxDropScore: 20,
     maxTilt: 5,
-    g: 1
+    g: 1,
+    gamesPerRound: 5
 };
 
 export default GLOBALS;

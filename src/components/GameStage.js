@@ -66,6 +66,7 @@ export default function GameStage({
                 rightX: rightX
             });
 
+
             // Second and Third Platforms
             for (let i = 1; i < 3; i++) {
                 maze.push({
@@ -73,34 +74,46 @@ export default function GameStage({
                     gateways: []
                 })
                 leftX = 0;
-                let prevNumGaps = maze[i - 1].gateways.length;
-                for (let j = 0; j < prevNumGaps; j++) {
-                    let oldGapX = maze[i - 1].gateways[j].leftX;
-                    let shift = Math.floor(Math.random() * 50) + 25;
-                    rightX = leftX + Math.floor((oldGapX - leftX) * shift/100);
-                    maze[i].platforms.push({
-                        leftX: leftX,
-                        rightX: rightX
-                    });
-                    maze[i].gateways.push({
-                        leftX: rightX,
-                        rightX: rightX + GLOBALS.gateWidth
-                    });
+                let prevNumPlatforms = maze[i - 1].platforms.length;
+                for (let j = 0; j < prevNumPlatforms; j++) {
+                    let oldPlatformLeft = maze[i - 1].platforms[j].leftX;
+                    let oldPlatformRight = maze[i - 1].platforms[j].rightX;
+                    let oldPlatformWidth = oldPlatformRight - oldPlatformLeft + 1;
+                    if (oldPlatformWidth > GLOBALS.gateWidth + 2 * GLOBALS.ballRadius) {
+                        let shift = Math.floor(Math.random() * 10);
+                        rightX = oldPlatformLeft + Math.floor((oldPlatformWidth / 2 - GLOBALS.gateWidth / 2) * (shift + 90)/100);
+                        maze[i].platforms.push({
+                            leftX: leftX,
+                            rightX: rightX
+                        });
+                        maze[i].gateways.push({
+                            leftX: rightX,
+                            rightX: rightX + GLOBALS.gateWidth
+                        });
+                        leftX = rightX + GLOBALS.gateWidth;
+                    }
+                }
+                // If the final platform is long enough, add another gateway
+                let testPlatformWidth = GLOBALS.mazeWidth - leftX;
+                if (testPlatformWidth > GLOBALS.gateWidth + 2 * GLOBALS.ballRadius) {
+                    let shift = Math.floor(Math.random() * 10) + 90;
+                    rightX = leftX + Math.floor((testPlatformWidth / 2 - GLOBALS.gateWidth / 2) * shift/100);
+                    maze[i].platforms.push(
+                        {
+                            leftX: leftX,
+                            rightX: rightX
+                        }
+                    );
+                    maze[i].gateways.push(
+                        {
+                            leftX: rightX,
+                            rightX: rightX + GLOBALS.gateWidth
+                        }
+                    );
                     leftX = rightX + GLOBALS.gateWidth;
                 }
-                // Add Extra Gateway
-                let shift = Math.floor(Math.random() * 50) + 25;
-                rightX = leftX + Math.floor((GLOBALS.mazeWidth - leftX) * shift/100);
-                maze[i].platforms.push({
-                    leftX: leftX,
-                    rightX: rightX
-                });
-                maze[i].gateways.push({
-                    leftX: rightX,
-                    rightX: rightX + GLOBALS.gateWidth
-                });
+                    
                 // Add Final Platform
-                leftX = rightX + GLOBALS.gateWidth;
                 rightX = GLOBALS.mazeWidth - 1;
                 maze[i].platforms.push({
                     leftX: leftX,

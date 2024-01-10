@@ -89,7 +89,6 @@ export default function MovingBall ({
                     }
                 }
                 if (isInGateway) {
-                    console.log("Got isInGateway");
                     leftX = mazeData[ballRow].gateways[gateNum].leftX;
                     rightX = mazeData[ballRow].gateways[gateNum].rightX;
                     // Due: allow for final row and score
@@ -273,8 +272,6 @@ export default function MovingBall ({
             // Draw the ball spot.
             const sx = px + GLOBALS.ballSpotOffset * Math.cos(ballAngle);
             const sy = py + GLOBALS.ballSpotOffset * Math.sin(ballAngle);
-            console.log("ballangle, sx, sy:", ballAngle, sx, sy);
-            console.log("px, ballX: ", px, ballX);
 
             let {x: x1, y: y1} = rotatePoint(sx, sy, midX, midY, mazeTilt);
             g.lineStyle(1, 0xff0000, 1);

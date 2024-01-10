@@ -13,6 +13,10 @@ Contents
 
     Allow for gateway ball motion
 
+    Allow for fall into gateway
+
+    Allow for final row and game score/over
+
     Set-up the startGame and initialLoad states
 
     Do the Start Game button in the score column

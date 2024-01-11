@@ -10,14 +10,16 @@ export default function GamePage() {
     const [roundScore, setRoundScore] = useState(0);
     const [gameNum, setGameNum] = useState(0);
     const [gameOver, setGameOver] = useState(false);
+    const [tickerBlocked, setTickerBlocked] = useState(false);
 
     // Game Over
     useEffect (() => {
         if (gameOver) {
             console.log("Game Over Score:", roundScore);
             setGameOver(false);
+            setTickerBlocked(true);
         }
-    }, [gameOver, setGameOver, roundScore])
+    }, [gameOver, roundScore])
 
     return (
         <Container>
@@ -35,6 +37,7 @@ export default function GamePage() {
                         roundScore={roundScore}
                         setRoundScore={setRoundScore}
                         setGameOver={setGameOver}
+                        tickerBlocked={tickerBlocked}
                     />
                 </Col>
                 <Col sm={12} md={6} className="text-center">

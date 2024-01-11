@@ -16,7 +16,8 @@ export default function MovingBall ({
     scoreData,
     roundScore,
     setRoundScore,
-    setGameOver
+    setGameOver,
+    tickerBlocked
 }) {
     const [ballVelocity, setBallVelocity] = useState(0);
     const [ballAcceleration, setBallAcceleration] = useState(0);
@@ -62,22 +63,28 @@ export default function MovingBall ({
         setBallY, 
         setBallAcceleration, 
         setBallVelocity,
-        setBallAngle,
+        setBallAngle
     ])
 
     // Update Ball State
     useEffect( () => {
         const adjustBall = () => {
 
-            const isBallInGateway = (v, s) => {
+            const isBallInGateway = (ballRow, v, s) => {
                 let isInGateway = false;
                 let scoreGate = false;
                 let i, gateNum, leftX, rightX, targetPlatform, score;
                 if (v < 0) {
                     for (i = mazeData[ballRow].gateways.length - 1; i >= 0; i--) {
-                        if (ballX > mazeData[ballRow].gateways[i].rightX &&
-                            mazeData[ballRow].gateways[i].rightX >= ballX - GLOBALS.ballRadius && 
-                            mazeData[ballRow].gateways[i].rightX <= ballX - GLOBALS.ballRadius - s) {
+                        let gateLeft = mazeData[ballRow].gateways[i].leftX;
+                        let gateRight = mazeData[ballRow].gateways[i].rightX;
+                        if ((ballX >= gateRight && 
+                            gateRight >= ballX - GLOBALS.ballRadius && 
+                            gateRight <= ballX - GLOBALS.ballRadius - s
+                            )
+                            ||
+                            (ballX < gateRight && gateLeft < ballX)
+                        ){
                             isInGateway = true;
                             gateNum = i;
                         }
@@ -85,9 +92,14 @@ export default function MovingBall ({
                 }
                 else {
                     for (i = 0; i < mazeData[ballRow].gateways.length; i++) {
-                        if (ballX < mazeData[ballRow].gateways[i].leftX &&
-                            mazeData[ballRow].gateways[i].leftX >= ballX + GLOBALS.ballRadius &&
-                            mazeData[ballRow].gateways[i].leftX <= ballX + GLOBALS.ballRadius + s) {
+                        let gateLeft = mazeData[ballRow].gateways[i].leftX;
+                        let gateRight = mazeData[ballRow].gateways[i].rightX;
+                        if ((ballX < gateLeft &&
+                            gateLeft >= ballX + GLOBALS.ballRadius &&
+                            gateLeft <= ballX + GLOBALS.ballRadius + s)
+                            ||
+                            (ballX > gateLeft && gateRight > ballX)
+                        ){
                             isInGateway = true;
                             gateNum = i;
                         }
@@ -97,17 +109,20 @@ export default function MovingBall ({
                     leftX = mazeData[ballRow].gateways[gateNum].leftX;
                     rightX = mazeData[ballRow].gateways[gateNum].rightX;
                     // Due: allow for final row and score
-                    targetPlatform = getTargetPlatform(leftX, rightX);
                     // Check whether in final row
                     if (ballRow >= GLOBALS.numMazeRows - 1) {
+                        targetPlatform = -1;
                         score = scoreData[gateNum];
                         scoreGate = true;
+                    }
+                    else {
+                        targetPlatform = getTargetPlatform(ballRow, leftX, rightX);
                     }
                 }
                 return {isInGateway, gateNum, leftX, rightX, targetPlatform, scoreGate, score};
             }
 
-            const getTargetPlatform = (leftX, rightX) => {
+            const getTargetPlatform = (ballRow, leftX, rightX) => {
                 let i;
                 for (i = 0; i < mazeData[ballRow + 1].platforms.length; i++) {
                     if (leftX > mazeData[ballRow + 1].platforms[i].leftX && 
@@ -175,18 +190,20 @@ export default function MovingBall ({
                 let nextRowY = (ballRow + 2) * GLOBALS.rowHeight - GLOBALS.platformDepth - GLOBALS.ballRadius;
                 if (by >= nextRowY) {
                     by = nextRowY;
-                    setBallRow(prevBallRow => prevBallRow + 1);
+                    let br = ballRow + 1;
+                    setBallRow(br);
                     let tp = ballTargetPlatform;
                     setBallPlatform(tp);
                     let {isInGateway, gateNum: fGatenum, 
                         targetPlatform: dropPlatform, scoreGate, score} =
-                        isBallInGateway(v, s);
+                        isBallInGateway(br, v, s);
                     if (isInGateway) {
+                        console.log("Falling in gateway", fGatenum);
                         setFallingGateNum(fGatenum);
                         setBallPlatform(dropPlatform);
                         if (scoreGate) {
                             setIsFalling(false);
-                            return {scoreGate, score}
+                            return {scoreGate, score};
                         }
                     }
                     else {
@@ -209,16 +226,19 @@ export default function MovingBall ({
                 doBallFalling();
             }
             else {
-                let {isInGateway, gateNum, leftX, rightX, targetPlatform, scoreGate, score} = isBallInGateway(v, s);
+                let {isInGateway, gateNum, leftX, rightX, targetPlatform, scoreGate, score} = isBallInGateway(ballRow, v, s);
                 if (isInGateway) {
                     if (scoreGate) {
                         score = score + roundScore;
+                        console.log("Round Score:", roundScore);
+                        setIsFalling(false);
                         setRoundScore(score);
                         setGameOver(true);
                         app.ticker.remove(adjustBall);
-                        return;
                     }
-                    doBallThroughGateway(gateNum, leftX, rightX, targetPlatform, v);
+                    else {
+                        doBallThroughGateway(gateNum, leftX, rightX, targetPlatform, v);
+                    }
                 }
                 else {
                     let bx = ballX + s;
@@ -245,18 +265,20 @@ export default function MovingBall ({
             }
         }
 
-        app.ticker.add(adjustBall);
- 
-        // Cleanup on unmount
-        return () => {
-            if (app && app.ticker) {
-            app.ticker.remove(adjustBall);
-            }
-        };
+        if (!tickerBlocked) {
+            app.ticker.add(adjustBall);
+        }
+        else {
+            // Cleanup on unmount
+            return () => {
+                if (app && app.ticker) {
+                app.ticker.remove(adjustBall);
+                }
+            };
+        }
 
     }, [
         app,
-        app.ticker,
         mazeData,
         mazeTilt,
         ballX,
@@ -283,7 +305,8 @@ export default function MovingBall ({
         roundScore,
         setRoundScore,
         setGameOver,
-        scoreData
+        scoreData,
+        tickerBlocked
     ]);
 
     const drawBall = useCallback((g) => {

@@ -17,7 +17,8 @@ export default function GameStage({
     setMazeTilt,
     roundScore,
     setRoundScore,
-    setGameOver
+    setGameOver,
+    tickerBlocked
 }) {
     const [mazeData, setMazeData] = useState([]);
     const [scoreData, setScoreData] = useState([]);
@@ -299,7 +300,7 @@ export default function GameStage({
 
     return (
         <>
-        <Stage width={GLOBALS.stageWidth} height={GLOBALS.stageHeight} options={{background: 0xc0c000}}>
+        <Stage width={GLOBALS.stageWidth} height={GLOBALS.stageHeight} options={{antialias: true, background: 0xc0c000}}>
             { mazeBuilt &&
             <>
                 <Graphics draw={drawMaze} />
@@ -318,6 +319,7 @@ export default function GameStage({
                     roundScore={roundScore}
                     setRoundScore={setRoundScore}
                     setGameOver={setGameOver}
+                    tickerBlocked={tickerBlocked}
                 />  
             </>
             }

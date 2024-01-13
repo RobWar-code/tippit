@@ -179,26 +179,33 @@ export default function GameStage({
             setMazeBuilt(true);
         }
 
-        const doScoreData = (mazeEndRow) => {
+        const doScoreData = () => {
             let maxDone = false;
-            let numDrops = mazeEndRow.gateways.length;
+            let numDrops = mazeData[row].gateways.length;
             let maxs = GLOBALS.maxDropScore;
             let scoreTagData = [];
-            for (let i = 0; i < numDrops; i++) {
-                let entry = {};
-                entry.leftX = mazeEndRow.gateways[i].leftX;
-                entry.rightX = mazeEndRow.gateways[i].rightX;
-                if (i === 0 || i === numDrops - 1) {
-                    entry.score = 0;
+            const numScoreRows = GLOBALS.scoreRows.length;
+            for (i = 0; i < numScoreRows; i++) {
+                scoreTagData.push([]);
+                let mazeRow = GLOBALS.scoreRows[i];
+                numDrops = mazeData[mazeRow].gateways.length;
+                let maxs = maxs * GLOBALS.scoreRowFactor * (i + 1);
+                for (let j = 0; j < numDrops; j++) {
+                    let entry = {};
+                    entry.leftX = mazeData[mazeRow].gateways[j].leftX;
+                    entry.rightX = mazeData[mazeRow].gateways[j].rightX;
+                    if (j === 0 || j === numDrops - 1) {
+                        entry.score = 0;
+                    }
+                    else if (Math.random() > 0.75 && !maxDone) {
+                        maxDone = true;
+                        entry.score = maxs;
+                    }
+                    else {
+                        entry.score = Math.floor(maxs / 4 * Math.random());
+                    }
+                    scoreTagData[i].push(entry);
                 }
-                else if (Math.random() > 0.75 && !maxDone) {
-                    maxDone = true;
-                    entry.score = maxs;
-                }
-                else {
-                    entry.score = Math.floor(maxs / 4 * Math.random());
-                }
-                scoreTagData.push(entry);
             }
             setScoreData(scoreTagData);
         }

@@ -18,23 +18,28 @@ export default function ScoreTags({
         return <Text text={content} x={x} y={y} rotation={rotation} style={style} />
     };
 
+    const midX = GLOBALS.stageWidth / 2;
+    const mazeLeft = midX - GLOBALS.mazeWidth / 2;
+    const midY = GLOBALS.stageHeight / 2;
     let textData = [];
-    for (let i = 0; i < scoreData.length; i++) {
-        const midX = GLOBALS.stageWidth / 2;
-        const mazeLeft = midX - GLOBALS.mazeWidth / 2;
-        const midY = GLOBALS.stageHeight / 2 + 5;
-        let px = scoreData[i].leftX + mazeLeft + GLOBALS.gateWidth / 2 - 8;
-        let py = GLOBALS.mazeHeight / 2 + midY - 20;
-        // Rotate x, y to position
-        let {x, y} = rotatePoint(px, py, midX, midY, mazeTilt);
-        textData.push ({
-            id: i,
-            content: scoreData[i].score.toString(),
-            x: x,
-            y: y,
-            rotation: mazeTilt,
-            style: textStyle
-        });
+    let id = 0;
+    for (let i = 0; i < GLOBALS.scoreRows.length; i++) {
+        let row = GLOBALS.scoreRows[i];
+        let py = GLOBALS.stageHeight / 2 - GLOBALS.mazeHeight / 2 + GLOBALS.rowHeight * row;
+        for (let j = 0; j < scoreData.length; j++) {
+            let px = scoreData[i][j].leftX + mazeLeft + GLOBALS.gateWidth / 2 - 8;
+            // Rotate x, y to position
+            let {x, y} = rotatePoint(px, py, midX, midY, mazeTilt);
+            textData.push ({
+                id: id,
+                content: scoreData[i][j].score.toString(),
+                x: x,
+                y: y,
+                rotation: mazeTilt,
+                style: textStyle
+            });
+            ++id;
+        }
     }
     const texts = textData;
 

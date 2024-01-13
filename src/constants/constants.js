@@ -12,10 +12,12 @@ const GLOBALS={
     ballRadius: 8,
     ballSpotRadius: 2,
     ballSpotOffset: 6,
+    maxTilt: 1,
+    g: 0.2,
+    gamesPerRound: 5,
     maxDropScore: 20,
-    maxTilt: 5,
-    g: 1,
-    gamesPerRound: 5
+    scoreRowFactor: 2,
+    scoreRows: [6, 12, 19]
 };
 
 export default GLOBALS;

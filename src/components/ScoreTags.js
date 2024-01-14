@@ -26,7 +26,7 @@ export default function ScoreTags({
     for (let i = 0; i < GLOBALS.scoreRows.length; i++) {
         let row = GLOBALS.scoreRows[i];
         let py = GLOBALS.stageHeight / 2 - GLOBALS.mazeHeight / 2 + GLOBALS.rowHeight * row;
-        for (let j = 0; j < scoreData.length; j++) {
+        for (let j = 0; j < scoreData[i].length; j++) {
             let px = scoreData[i][j].leftX + mazeLeft + GLOBALS.gateWidth / 2 - 8;
             // Rotate x, y to position
             let {x, y} = rotatePoint(px, py, midX, midY, mazeTilt);

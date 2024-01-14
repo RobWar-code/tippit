@@ -11,11 +11,15 @@ Contents
 
     * Do basic ball motion
 
-    Allow for gateway ball motion
+    * Allow for gateway ball motion
 
-    Allow for fall into gateway
+    * Allow for fall into gateway
 
-    Allow for final row and game score/over
+    * Allow for final row and game score/over
+
+    Provide additional score rows (incentive)
+
+    Put Current Game Score on display
 
     Allow for max speed to pass through gateway
 

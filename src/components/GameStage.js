@@ -17,6 +17,8 @@ export default function GameStage({
     setMazeTilt,
     roundScore,
     setRoundScore,
+    gameScore,
+    setGameScore,
     setGameOver,
     tickerBlocked
 }) {
@@ -175,37 +177,37 @@ export default function GameStage({
                 }
             }
             setMazeData(maze);
-            doScoreData(maze[GLOBALS.numMazeRows - 1]);
+            doScoreData(maze);
             setMazeBuilt(true);
         }
 
-        const doScoreData = () => {
+        const doScoreData = (maze) => {
             let maxDone = false;
-            let numDrops = mazeData[row].gateways.length;
             let maxs = GLOBALS.maxDropScore;
+            let maxScore = maxs;
             let scoreTagData = [];
             const numScoreRows = GLOBALS.scoreRows.length;
-            for (i = 0; i < numScoreRows; i++) {
+            for (let i = 0; i < numScoreRows; i++) {
                 scoreTagData.push([]);
                 let mazeRow = GLOBALS.scoreRows[i];
-                numDrops = mazeData[mazeRow].gateways.length;
-                let maxs = maxs * GLOBALS.scoreRowFactor * (i + 1);
+                let numDrops = maze[mazeRow].gateways.length;
                 for (let j = 0; j < numDrops; j++) {
                     let entry = {};
-                    entry.leftX = mazeData[mazeRow].gateways[j].leftX;
-                    entry.rightX = mazeData[mazeRow].gateways[j].rightX;
+                    entry.leftX = maze[mazeRow].gateways[j].leftX;
+                    entry.rightX = maze[mazeRow].gateways[j].rightX;
                     if (j === 0 || j === numDrops - 1) {
                         entry.score = 0;
                     }
                     else if (Math.random() > 0.75 && !maxDone) {
                         maxDone = true;
-                        entry.score = maxs;
+                        entry.score = maxScore;
                     }
                     else {
-                        entry.score = Math.floor(maxs / 4 * Math.random());
+                        entry.score = Math.floor(maxScore / 4 * Math.random());
                     }
                     scoreTagData[i].push(entry);
                 }
+                maxScore *= 2;
             }
             setScoreData(scoreTagData);
         }
@@ -325,6 +327,8 @@ export default function GameStage({
                     scoreData={scoreData}
                     roundScore={roundScore}
                     setRoundScore={setRoundScore}
+                    gameScore={gameScore}
+                    setGameScore={setGameScore}
                     setGameOver={setGameOver}
                     tickerBlocked={tickerBlocked}
                 />  

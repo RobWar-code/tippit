@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react';
 import {Container, Row, Col} from 'react-bootstrap';
 import GameStage from '../components/GameStage.js';
+import ScoreTally from '../components/ScoreTally.js';
 
 export default function GamePage() {
     const [initialLoad, setInitialLoad] = useState(true);
@@ -8,6 +9,7 @@ export default function GamePage() {
     const [gameStart, setGameStart] = useState(true);
     const [mazeTilt, setMazeTilt] = useState(0);
     const [roundScore, setRoundScore] = useState(0);
+    const [gameScore, setGameScore] = useState(0);
     const [gameNum, setGameNum] = useState(0);
     const [gameOver, setGameOver] = useState(false);
     const [tickerBlocked, setTickerBlocked] = useState(false);
@@ -36,13 +38,15 @@ export default function GamePage() {
                         setMazeTilt={setMazeTilt}
                         roundScore={roundScore}
                         setRoundScore={setRoundScore}
+                        gameScore={gameScore}
+                        setGameScore={setGameScore}
                         setGameOver={setGameOver}
                         tickerBlocked={tickerBlocked}
                     />
                 </Col>
-                <Col sm={12} md={6} className="text-center">
-                    <h2>Score</h2>
-                </Col>
+                <ScoreTally 
+                    gameScore={gameScore}
+                />
             </Row>
         </Container>
     )

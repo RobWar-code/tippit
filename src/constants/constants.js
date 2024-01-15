@@ -8,6 +8,7 @@ const GLOBALS={
     rowHeight: 21,
     platformDepth: 3,
     maxPlatformsPerRow: 7,
+    minPlatformWidth: 8,
     ballWidth: 16,
     ballRadius: 8,
     ballSpotRadius: 2,

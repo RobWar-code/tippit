@@ -6,7 +6,26 @@ Contents
 
 <h1>Due
 
-    
+
+    Include Sound Effects
+
+    Do user speed and score adjustments
+
+    Highlight the score gates that have been passed through
+
+    Allow for max speed to pass through gateway
+
+    Set-up the startGame and initialLoad states
+
+    Do the game introduction modal.
+
+    Do scores page
+ 
+
+<h1>Done
+
+    15/01/2024
+
     * Do the maze tilt slider
 
     * Do basic ball motion
@@ -17,19 +36,17 @@ Contents
 
     * Allow for final row and game score/over
 
-    Provide additional score rows (incentive)
+    * Provide additional score rows (incentive)
 
-    Put Current Game Score on display
+    * Put Current Game Score etc. on display (Score Tally)
 
-    Allow for max speed to pass through gateway
+    * Tidy-up the score tag centering
 
-    Set-up the startGame and initialLoad states
+    * Game Over Modal
 
-    Do the Start Game button in the score column
+    * Reset slider on game start
 
- 
-
-<h1>Done
+    * Increase/set the minimum size for the right-most platform (8px)
 
     05/01/2024
     

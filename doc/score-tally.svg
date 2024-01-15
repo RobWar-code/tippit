@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1 (c4e8f9e, 2021-05-24)"
+   sodipodi:docname="score-tally.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.57905443"
+     inkscape:cx="352.29849"
+     inkscape:cy="554.35203"
+     inkscape:window-width="1600"
+     inkscape:window-height="832"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="58.653873"
+       y="13.722348"
+       id="text4478"><tspan
+         sodipodi:role="line"
+         id="tspan4476"
+         style="stroke-width:0.264583"
+         x="58.653873"
+         y="13.722348">Tippit - Score Tally Section</tspan></text>
+    <rect
+       style="fill:#fdfcfd;stroke:#0c0000;stroke-width:0.264583"
+       id="rect5506"
+       width="185.51994"
+       height="55.921436"
+       x="14.046201"
+       y="21.871803" />
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="82.231178"
+       y="29.528265"
+       id="text8238"><tspan
+         sodipodi:role="line"
+         id="tspan8236"
+         style="stroke-width:0.264583"
+         x="82.231178"
+         y="29.528265">Game 2 of 5</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="20.149754"
+       y="42.018215"
+       id="text23962"><tspan
+         sodipodi:role="line"
+         id="tspan23960"
+         style="stroke-width:0.264583"
+         x="20.149754"
+         y="42.018215">Current Game Score: 5                 Last Game Score: 20</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="69.967323"
+       y="61.246914"
+       id="text56556"><tspan
+         sodipodi:role="line"
+         id="tspan56554"
+         style="stroke-width:0.264583"
+         x="69.967323"
+         y="61.246914">Last Round Score: 50</tspan></text>
+  </g>
+</svg>

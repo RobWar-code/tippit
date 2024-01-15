@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1 (c4e8f9e, 2021-05-24)"
+   sodipodi:docname="game-over-modal.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.5"
+     inkscape:cx="278"
+     inkscape:cy="588"
+     inkscape:window-width="1600"
+     inkscape:window-height="832"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="71.920418"
+       y="12.182651"
+       id="text2828"><tspan
+         sodipodi:role="line"
+         id="tspan2826"
+         style="stroke-width:0.264583"
+         x="71.920418"
+         y="12.182651">Game Over Modal</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.264583"
+         x="71.920418"
+         y="20.120152"
+         id="tspan6148" /><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.264583"
+         x="71.920418"
+         y="28.057652"
+         id="tspan6150" /></text>
+    <rect
+       style="fill:#fdfcfd;stroke:#0c0000;stroke-width:0.264583"
+       id="rect7692"
+       width="196.25838"
+       height="84.822632"
+       x="7.2187934"
+       y="19.663755" />
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="81.85524"
+       y="29.332479"
+       id="text9830"><tspan
+         sodipodi:role="line"
+         id="tspan9828"
+         style="stroke-width:0.264583"
+         x="81.85524"
+         y="29.332479">Game 3 Over</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="49.101112"
+       y="41.378025"
+       id="text13854"><tspan
+         sodipodi:role="line"
+         id="tspan13852"
+         style="stroke-width:0.264583"
+         x="49.101112"
+         y="41.378025">Score: 20        Round Score: 40</tspan></text>
+    <rect
+       style="fill:#fdfcfd;stroke:#0c0000;stroke-width:0.281531"
+       id="rect15674"
+       width="52.145145"
+       height="13.855878"
+       x="32.626549"
+       y="85.725433" />
+    <rect
+       style="fill:#fdfcfd;stroke:#0c0000;stroke-width:0.280624"
+       id="rect15676"
+       width="60.469048"
+       height="13.328424"
+       x="117.90855"
+       y="86.055565" />
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="52.248894"
+       y="94.196808"
+       id="text17300"><tspan
+         sodipodi:role="line"
+         id="tspan17298"
+         style="stroke-width:0.264583"
+         x="52.248894"
+         y="94.196808">Quit</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="119.48288"
+       y="94.004532"
+       id="text28374"><tspan
+         sodipodi:role="line"
+         id="tspan28372"
+         style="stroke-width:0.264583"
+         x="119.48288"
+         y="94.004532">Next Round/Game</tspan></text>
+  </g>
+</svg>

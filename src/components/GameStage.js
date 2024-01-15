@@ -1,4 +1,4 @@
-import {useState, useEffect, useCallback} from 'react';
+import {useRef, useState, useEffect, useCallback} from 'react';
 import {Stage, Graphics} from '@pixi/react';
 import {Form} from 'react-bootstrap';
 import GLOBALS from '../constants/constants';
@@ -25,6 +25,7 @@ export default function GameStage({
     const [mazeData, setMazeData] = useState([]);
     const [scoreData, setScoreData] = useState([]);
     const [mazeBuilt, setMazeBuilt] = useState(false);
+    const sliderRef = useRef(null);
 
     useEffect( () => {
         const createMaze = () => {
@@ -147,10 +148,13 @@ export default function GameStage({
                 while (!rowDone) {
                     let priorPlatLeft = maze[i-1].platforms[platformNum].leftX;
                     let priorPlatRight = maze[i-1].platforms[platformNum].rightX;
-                    if ((priorPlatRight - priorPlatLeft - GLOBALS.gateWidth) / 2 > 6) {
+                    if ((priorPlatRight - priorPlatLeft - GLOBALS.gateWidth) / 2 > GLOBALS.minPlatformWidth) {
                         // Insert Gap
                         shift = 15 - Math.floor(Math.random() * 30);
                         rightX = priorPlatLeft + ((priorPlatRight - priorPlatLeft) / 2) * (1 + shift / 100);
+                        // Check whether this split leaves too short a platform on the right
+                        let residue = GLOBALS.mazeWidth - rightX - GLOBALS.gateWidth * 2;
+                        if (residue < GLOBALS.minPlatformWidth) rightX = rightX - GLOBALS.minPlatformWidth;
                         maze[i].platforms.push({
                             leftX: leftX,
                             rightX: rightX
@@ -301,6 +305,14 @@ export default function GameStage({
 
     }, [mazeData, mazeTilt]);
 
+    /* Reset Slider */
+    useEffect( () => {
+        if (gameStart) {
+            const slider = sliderRef.current;
+            slider.value = 50;
+        }
+    }, [gameStart])
+
     const sliderChange = (e) => {
         const p = e.target.value;
         let angle = ((p / 100) * GLOBALS.maxTilt * 2 - GLOBALS.maxTilt) * Math.PI/180;
@@ -338,7 +350,7 @@ export default function GameStage({
         <div className="text-center">
             <p className="sliderHead">Tilt Control</p>
             <span className="sliderText">-{GLOBALS.maxTilt}&deg;&emsp;</span>
-            <Form.Range className="tiltSlider" defaultValue={50} onChange={sliderChange}/>
+            <Form.Range className="tiltSlider" defaultValue={50} onChange={sliderChange} ref={sliderRef}/>
             <span className="sliderText">&emsp;+{GLOBALS.maxTilt}&deg;</span>
         </div>
         </>

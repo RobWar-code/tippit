@@ -6,8 +6,13 @@ Contents
 
 <h1>Due
 
+    * Include Sound Effects
 
-    Include Sound Effects
+    * Fix Problem with game start (tilt works, but ball does not move)
+
+    * Remove unused variables (GameStage.js)
+
+    Include top margin and border for tools
 
     Do user speed and score adjustments
 

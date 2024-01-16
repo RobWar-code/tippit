@@ -24,7 +24,8 @@ export default function GameOverModal({
         setGameOverDue(false);
         setGameStart(true);
         setLastGameScore(gameScore);
-        if (gameNum >= GLOBALS.gamesPerRound - 1) {
+        setGameNum(gameNum + 1);
+        if (gameNum >= GLOBALS.gamesPerRound) {
             setRoundStart(true);
             setGameNum(0);
             setLastRoundScore(roundScore);

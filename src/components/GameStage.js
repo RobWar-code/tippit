@@ -20,7 +20,10 @@ export default function GameStage({
     gameScore,
     setGameScore,
     setGameOver,
-    tickerBlocked
+    tickerBlocked,
+    setTickerBlocked,
+    soundEnabled,
+    gForce
 }) {
     const [mazeData, setMazeData] = useState([]);
     const [scoreData, setScoreData] = useState([]);
@@ -30,8 +33,6 @@ export default function GameStage({
     useEffect( () => {
         const createMaze = () => {
             let maze = [];
-            const minOverhang = 10;
-            const minPlatformWidth = 10;
             // First Row
             // First Platform
             let leftX = 0;
@@ -141,10 +142,8 @@ export default function GameStage({
                 // Each platform
                 let shift = 0;
                 let rowDone = false;
-                let gateNum = 0;
                 let platformNum = 0;
                 if (i === 3) platformNum = 1;
-                if (i > 3) gateNum = 1;
                 while (!rowDone) {
                     let priorPlatLeft = maze[i-1].platforms[platformNum].leftX;
                     let priorPlatRight = maze[i-1].platforms[platformNum].rightX;
@@ -165,7 +164,6 @@ export default function GameStage({
                         });
                         leftX = rightX + GLOBALS.gateWidth;
                     }
-                    ++gateNum;
                     ++platformNum;
                     if (platformNum >= maze[i-1].platforms.length) rowDone = true;
                     if (rowDone === true) {
@@ -186,8 +184,8 @@ export default function GameStage({
         }
 
         const doScoreData = (maze) => {
-            let maxDone = false;
-            let maxs = GLOBALS.maxDropScore;
+            const maxs = Math.floor(GLOBALS.maxDropScore * 
+                (1 + (gForce - GLOBALS.minG) / (GLOBALS.maxG - GLOBALS.minG)));
             let maxScore = maxs;
             let scoreTagData = [];
             const numScoreRows = GLOBALS.scoreRows.length;
@@ -202,15 +200,16 @@ export default function GameStage({
                     if (j === 0 || j === numDrops - 1) {
                         entry.score = 0;
                     }
-                    else if (Math.random() > 0.75 && !maxDone) {
-                        maxDone = true;
-                        entry.score = maxScore;
-                    }
                     else {
                         entry.score = Math.floor(maxScore / 4 * Math.random());
                     }
                     scoreTagData[i].push(entry);
                 }
+                // Assign maximum score
+                let n = numDrops - 2;
+                let p = Math.floor(Math.random() * n) + 1;
+                scoreTagData[i][p].score = maxScore;
+
                 maxScore *= 2;
             }
             setScoreData(scoreTagData);
@@ -219,7 +218,7 @@ export default function GameStage({
             createMaze();
         }
 
-    }, [initialLoad, roundStart, gameStart])
+    }, [initialLoad, roundStart, gameStart, gForce])
 
     const drawMaze = useCallback((g) => {
         const mazeLeft = GLOBALS.stageWidth / 2 - GLOBALS.mazeWidth / 2;
@@ -273,7 +272,6 @@ export default function GameStage({
         g.endFill();
 
         let rowOffsetY = GLOBALS.rowHeight - GLOBALS.platformDepth;
-        let count = 0;
         for (let row of mazeData) {
             for (let platform of row.platforms) {
                 let leftX = platform.leftX;
@@ -300,7 +298,6 @@ export default function GameStage({
                 g.endFill();
             }
             rowOffsetY = rowOffsetY + GLOBALS.rowHeight;
-            ++count;
         }
 
     }, [mazeData, mazeTilt]);
@@ -343,6 +340,9 @@ export default function GameStage({
                     setGameScore={setGameScore}
                     setGameOver={setGameOver}
                     tickerBlocked={tickerBlocked}
+                    setTickerBlocked={setTickerBlocked}
+                    soundEnabled={soundEnabled}
+                    gForce={gForce}
                 />  
             </>
             }

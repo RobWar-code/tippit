@@ -8,6 +8,17 @@
     background-color: beige;
 }
 
+/* Introduction Panel */
+.introPanel {
+    background-color: #b0b040;
+    margin-bottom: 2px;
+}
+
+/* Stage Area */
+.stageCol {
+    background-color: #c0c000;
+}
+
 /* Maze Tilt Control */
 .sliderHead {
     font-size: 18px;
@@ -34,4 +45,21 @@
 .scoreTally {
     font-size: 20px;
     font-weight: bold;
+    margin-bottom: 3px;
+}
+
+/* Tools */
+.toolRow {
+    border: 2px solid black;
+    margin-top: 3px;
+}
+
+.toolButton {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.gSlider {
+    width: 60%;
+    background-color:#b0b040;
 }

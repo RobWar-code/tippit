@@ -2,6 +2,7 @@ import {useRef, useState, useEffect, useCallback} from 'react';
 import {Graphics, useApp} from '@pixi/react';
 import GLOBALS from '../constants/constants';
 import {rotatePoint} from '../libraries/geometry';
+import dingSound from '../assets/sounds/ding.mp3';
 
 export default function MovingBall ({
     mazeTilt,
@@ -19,7 +20,10 @@ export default function MovingBall ({
     gameScore,
     setGameScore,
     setGameOver,
-    tickerBlocked
+    tickerBlocked,
+    setTickerBlocked,
+    soundEnabled,
+    gForce,
 }) {
     const [ballX, setBallX] = useState(0);
     const [ballY, setBallY] = useState(0);
@@ -53,6 +57,7 @@ export default function MovingBall ({
             setInitialLoad(0); 
             setGameScore(0);
             gameScoreSource.current = 0;
+            setTickerBlocked(0);
         }
     }, [mazeData,
         gameStart,
@@ -65,7 +70,8 @@ export default function MovingBall ({
         setGameScore,
         ballX,
         ballY,
-        ballAngle
+        ballAngle,
+        setTickerBlocked
     ])
 
     // Update Ball State
@@ -85,6 +91,10 @@ export default function MovingBall ({
                 }
                 if (didScore) {
                     score = scoreData[scoreLine][gateNum].score;
+                    if (soundEnabled) {
+                        let ding = new Audio(dingSound);
+                        ding.play();
+                    }
                 }
                 return {didScore, score};
             }
@@ -205,9 +215,9 @@ export default function MovingBall ({
                         tickDone = true;
                     }
                     // Vertical Drop
-                    let s = vy * dt + GLOBALS.g * dt ** 2;
+                    let s = vy * dt + gForce * dt ** 2;
                     by = by + s;
-                    vy = vy + GLOBALS.g * dt;
+                    vy = vy + gForce * dt;
                     if (dt >= 1) tickDone = true;
                 }
                 let nextRowY = (ballRow.current + 2) * GLOBALS.rowHeight - GLOBALS.platformDepth - GLOBALS.ballRadius;
@@ -283,7 +293,7 @@ export default function MovingBall ({
                     setBallX(bx);
                     setBallAngle(ballAngle1);
                     ballVelocity.current = v; // u + a * t
-                    a = GLOBALS.g * (mazeTilt * 180/Math.PI) / 180;
+                    a = gForce * (mazeTilt * 180/Math.PI) / 180;
                     ballAcceleration.current = a;
                 }
             }
@@ -314,7 +324,9 @@ export default function MovingBall ({
         tickerBlocked,
         ballX,
         ballY,
-        ballAngle
+        ballAngle,
+        soundEnabled,
+        gForce
     ]);
 
     const drawBall = useCallback((g) => {

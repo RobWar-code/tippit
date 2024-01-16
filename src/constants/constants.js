@@ -1,6 +1,6 @@
 const GLOBALS={
     stageHeight: 500,
-    stageWidth: 390,
+    stageWidth: 360,
     mazeHeight: 421,
     mazeWidth: 300,
     gateWidth: 18,
@@ -14,9 +14,10 @@ const GLOBALS={
     ballSpotRadius: 2,
     ballSpotOffset: 6,
     maxTilt: 1,
-    g: 0.2,
+    maxG: 1,
+    minG: 0.2,
     gamesPerRound: 5,
-    maxDropScore: 20,
+    maxDropScore: 6,
     scoreRowFactor: 2,
     scoreRows: [6, 12, 19]
 };

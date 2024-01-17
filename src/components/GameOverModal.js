@@ -5,14 +5,17 @@ import GLOBALS from '../constants/constants';
 
 export default function GameOverModal({
     gameNum, 
+    roundNum,
     roundScore, 
     gameScore, 
     setGameOverDue, 
     setGameStart, 
     setRoundStart,
     setGameNum,
+    setRoundNum,
     setLastRoundScore,
-    setLastGameScore
+    setLastGameScore,
+    setScoreTable
 }) {
     const endOfRound = useRef(false);
 
@@ -25,7 +28,9 @@ export default function GameOverModal({
         setGameStart(true);
         setLastGameScore(gameScore);
         setGameNum(gameNum + 1);
-        if (gameNum >= GLOBALS.gamesPerRound) {
+        if (gameNum >= GLOBALS.gamesPerRound - 1) {
+            setScoreTable(prevScoreTable => [...prevScoreTable, {score: roundScore, round: roundNum + 1}]);
+            setRoundNum(roundNum + 1);
             setRoundStart(true);
             setGameNum(0);
             setLastRoundScore(roundScore);
@@ -43,7 +48,7 @@ export default function GameOverModal({
     >
         <Modal.Dialog>
         <Modal.Header closeButton>
-            <Modal.Title>Game {gameNum} Over</Modal.Title>
+            <Modal.Title>Game {gameNum + 1} Over</Modal.Title>
         </Modal.Header>
 
         <Modal.Body className="text-center">

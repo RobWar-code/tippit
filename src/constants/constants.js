@@ -16,7 +16,7 @@ const GLOBALS={
     maxTilt: 1,
     maxG: 1,
     minG: 0.2,
-    gamesPerRound: 5,
+    gamesPerRound: 4,
     maxDropScore: 6,
     scoreRowFactor: 2,
     scoreRows: [6, 12, 19]

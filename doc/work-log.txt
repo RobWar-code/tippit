@@ -12,17 +12,17 @@ Contents
 
     * Remove unused variables (GameStage.js)
 
-    Include top margin and border for tools
+    * Include top margin and border for tools
 
-    Do user speed and score adjustments
+    * Do user speed and score adjustments
 
-    Highlight the score gates that have been passed through
+    X Highlight the score gates that have been passed through
 
-    Allow for max speed to pass through gateway
+    X Allow for max speed to pass through gateway
 
-    Set-up the startGame and initialLoad states
+    * Set-up the startGame and initialLoad states
 
-    Do the game introduction modal.
+    * Do the game introduction modal.
 
     Do scores page
  

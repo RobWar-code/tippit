@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react';
+import {useOutletContext} from 'react-router-dom';
 import {Container, Row, Col, Button} from 'react-bootstrap';
 import GameStage from '../components/GameStage.js';
 import ScoreTally from '../components/ScoreTally.js';
@@ -15,6 +16,7 @@ export default function GamePage() {
     const [roundScore, setRoundScore] = useState(0);
     const [gameScore, setGameScore] = useState(0);
     const [gameNum, setGameNum] = useState(0);
+    const [roundNum, setRoundNum] = useState(0);
     const [lastRoundScore, setLastRoundScore] = useState(0);
     const [lastGameScore, setLastGameScore] = useState(0);
     const [gameOver, setGameOver] = useState(false);
@@ -22,11 +24,11 @@ export default function GamePage() {
     const [gameOverDue, setGameOverDue] = useState(false);
     const [soundEnabled, setSoundEnabled] = useState(false);
     const [gForce, setGForce] = useState(GLOBALS.minG);
+    const [, setScoreTable] = useOutletContext();
 
     // Game Over
     useEffect (() => {
         if (gameOver) {
-            console.log("Game Over Score:", roundScore);
             setGameOver(false);
             setGameOverDue(true);
             setTickerBlocked(true);
@@ -44,11 +46,11 @@ export default function GamePage() {
                     <Col sm={2}>
                     </Col>
                     <Col sm={8}className="text-center introPanel">
-                        <p>Welcome to Tippit</p>
+                        <p>Welcome to Tippit - Balances & Anticipation</p>
                         <p>Use the Tilt Control to control and make the ball fall
                             through the score gaps in the maze.
                         </p>
-                        <Button variant="primary" onClick={handleDismiss}>Dismiss Text</Button>
+                        <Button variant="primary" onClick={handleDismiss}>Dismiss Intro</Button>
                     </Col>
                 </Row>
             }
@@ -91,6 +93,8 @@ export default function GamePage() {
             </Row>
             {gameOverDue && <GameOverModal 
                 gameNum={gameNum}
+                roundNum={roundNum}
+                setRoundNum={setRoundNum}
                 roundScore={roundScore} 
                 gameScore={gameScore}
                 setGameOverDue={setGameOverDue}
@@ -99,6 +103,7 @@ export default function GamePage() {
                 setGameNum={setGameNum}
                 setLastRoundScore={setLastRoundScore}
                 setLastGameScore={setLastGameScore}
+                setScoreTable={setScoreTable}
             />}
         </Container>
     )

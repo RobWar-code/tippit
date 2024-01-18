@@ -37,6 +37,7 @@ export default function MovingBall ({
     const ballTargetPlatform = useRef(0);
     const fallingGateNum = useRef(0);
     const gameScoreSource = useRef(0);
+    const ballInFinalGate = useRef(false);
 
     const app = useApp();
 
@@ -58,6 +59,7 @@ export default function MovingBall ({
             setGameScore(0);
             gameScoreSource.current = 0;
             setTickerBlocked(0);
+            ballInFinalGate.current = false;
         }
     }, [mazeData,
         gameStart,
@@ -140,11 +142,12 @@ export default function MovingBall ({
                     // Due: allow for final row and score
                     // Check whether in final row
                     let {didScore, score} = getScore(ballRow, gateNum);
-                    if (didScore) {
+                    if (didScore && !ballInFinalGate.current) {
                         gameScoreSource.current += score;
                         setGameScore(gameScoreSource.current);
                     }
                     if (ballRow >= GLOBALS.numMazeRows - 1) {
+                        ballInFinalGate.current ? ballInFinalGate.current = false : ballInFinalGate.current = true;
                         targetPlatform = -1;
                         exitMaze = true;
                     }
@@ -265,6 +268,7 @@ export default function MovingBall ({
                 if (isInGateway) {
                     if (exitMaze) {
                         isFalling.current = false;
+                        setBallX(leftX + GLOBALS.ballRadius + (GLOBALS.gateWidth - GLOBALS.ballWidth) / 2);
                         setRoundScore(prevRoundScore => prevRoundScore + gameScoreSource.current);
                         setGameScore(gameScoreSource.current);
                         setGameOver(true);

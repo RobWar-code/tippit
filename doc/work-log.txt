@@ -6,6 +6,15 @@ Contents
 
 <h1>Due
 
+   * Thorough test
+
+    Release
+
+
+<h1>Done
+
+    18/01/2024
+    
     * Include Sound Effects
 
     * Fix Problem with game start (tilt works, but ball does not move)
@@ -24,11 +33,12 @@ Contents
 
     * Do the game introduction modal.
 
-    Do scores page
+    * Do scores page
+
+    * Fix display of final position of ball in gate 
+
+    * Prevent double of final gate score
  
-
-<h1>Done
-
     15/01/2024
 
     * Do the maze tilt slider

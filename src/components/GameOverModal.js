@@ -58,9 +58,9 @@ export default function GameOverModal({
         <Modal.Footer>
             <Button variant="primary" onClick={handleStartGame}>
             { endOfRound.current ? (
-                "Next Game"
-            ):(
                 "Next Round"
+            ):(
+                "Next Game"
             )}
             </Button>
         </Modal.Footer>
